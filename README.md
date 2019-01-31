@@ -1,4 +1,4 @@
-##### Ripple's Diary
+# Ripple's Diary
 An interesting annonymous chat website build with websockets! Chat with people annonymously with cool ripple effect. More feature will be added soon.
 
 ### Dependencies
@@ -8,4 +8,4 @@ An interesting annonymous chat website build with websockets! Chat with people a
 - [Jquery](https://jquery.com/) for front-end effects
 
 ### Latest Update News
-Added font-awesome support. You can now send icon to Ripple's Diary by typing the icon name in between two ":" symbols! However, this feature need improvement as is causes string length calculation become inaccurate.
+Added font-awesome support. You can now send icon to Ripple's Diary by typing the icon name in between two ":" symbols! However, this feature need improvement as it causes string length calculation become inaccurate.
