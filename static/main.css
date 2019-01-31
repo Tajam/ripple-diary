@@ -24,7 +24,7 @@ body
 
 .chatinput
 {
-	width: calc(100% - 42px);
+	width: calc(100% - 70px);
     padding: 2px 10px;
     font-size: 16px;
     font-family: inherit;
@@ -37,8 +37,8 @@ body
 .chatsend
 {
 	float: right;
-    padding: 5px 7px;
-    line-height: 36px;
+    padding: 5px 10px;
+    line-height: 22px;
     font-size: 24px;
     text-align: center;
     background-color: rgba(0,0,0,0.3);

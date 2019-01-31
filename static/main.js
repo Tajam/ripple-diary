@@ -57,18 +57,22 @@ function update() {
 		chatblocks = [];
 	}
 	//Anti spam
+	let changed = false;
 	if (chattemp > 0) {
 		chattemp -= 1;
+		changed = true;
 	}
 	let cttpperc = (chattemp/chattemp_max)*100;
 	if (cttpperc > 100) {
 		cttpperc = 100;
 	}
-	$('#chattemp').html(chattemp);
-	$('#chattemp').css('opacity',chattemp/chattemp_max);
-	$('#chattemp-bar').css('width','calc('+cttpperc+'% - 4px)');
-	$('#chattemp-bar').css('left','calc('+(100-cttpperc)/2+'% + 2px)');
-	$('#chattemp-bar').css('opacity',chattemp/chattemp_max);
+	if (changed) {
+		$('#chattemp').html(chattemp);
+		$('#chattemp').css('opacity',chattemp/chattemp_max);
+		$('#chattemp-bar').css('width','calc('+cttpperc+'% - 4px)');
+		$('#chattemp-bar').css('left','calc('+(100-cttpperc)/2+'% + 2px)');
+		$('#chattemp-bar').css('opacity',chattemp/chattemp_max);
+	}
 }
 
 $(document).ready(function() {
