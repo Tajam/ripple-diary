@@ -9,9 +9,18 @@ class Chatblock {
 	draw(targetID,id) {
 		this.bid = 'chatblock-' + id
 		this.block = $("<div id='"+this.bid+"'></div>");
-		this.block.html(this.msg);
+		let messageLength = 0;
+		for(let i = 0;i < this.msg[0].length;i++) {
+			if (this.msg[1][i] == 'emoji') {
+				this.block.append(this.msg[0][i]);
+				messageLength += 1;
+			} else {
+				this.block.append(document.createTextNode(this.msg[0][i]));
+				messageLength += this.msg[0][i].length;
+			}
+		}
 		this.block.addClass('chatblock chatblock-opaque');
-		let fsize = 80 - this.msg.length*2;
+		let fsize = 80 - messageLength*2;
 		if (fsize < 20) {
 			fsize = 20;
 		}

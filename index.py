@@ -19,12 +19,21 @@ for n in types:
     file.close()
 
 def msg_parse(msg):
-    temp = msg.split(':')
-    for n in range(1,len(temp)-1,2):
+    temp = msg.split('::')
+    indi = []
+    for n in range(len(temp)-1):
+        if n%2 == 0:
+            indi.append('message')
+            continue
+        found = False
         for m in fontawesome:
             if temp[n] in fontawesome[m]:
                 temp[n] = '<i class="'+m+' fa-'+temp[n]+'"></i>'
-    return ''.join(temp)
+                indi.append('emoji')
+                found = True
+                break
+        if not found: indi.append('message')
+    return [temp,indi]
         
 @socketio.on('connected')
 def connected():
