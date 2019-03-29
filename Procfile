@@ -1,1 +1,1 @@
-web: gunicorn --worker-class socketio.sgunicorn.GeventSocketIOWorker index:ripple_diary
+web: gunicorn --worker-class geventwebsocket.gunicorn.workers.GeventWebSocketWorker index:ripple_diary
