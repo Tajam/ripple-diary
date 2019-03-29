@@ -8,4 +8,4 @@ An interesting annonymous chat website build with websockets! Chat with people a
 - [Jquery](https://jquery.com/) for front-end effects
 
 ### Latest Update News
-Fixed font-awesome support, prevented JS injection and font size will calculate correctly.
+Deployed this on [Heroku](https://ripple-diary.herokuapp.com/).
