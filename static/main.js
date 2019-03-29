@@ -8,7 +8,7 @@ var chattemp = 0;
 var chattemp_max = 64;
 
 //Socket
-var socket = io.connect('http://' + document.domain + ':' + 20000);
+var socket = io.connect('https://' + document.domain);
 
 socket.on('connect', function() {
     socket.emit('connected');
