@@ -1,1 +1,1 @@
-web: gunicorn --worker-class eventlet -w 1 index:ripple_diary
+web: gunicorn --worker-class eventlet -w 1 index:app
