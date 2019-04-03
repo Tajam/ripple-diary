@@ -8,7 +8,9 @@ var chattemp = 0;
 var chattemp_max = 64;
 
 //Socket
-var socket = io.connect('https://' + document.domain);
+//var socket = io.connect('https://' + document.domain);
+//Socket Debug
+var socket = io.connect('http://' + document.domain + ':20000');
 
 socket.on('connect', function() {
     socket.emit('connected');
@@ -43,7 +45,7 @@ socket.on('onlineupdate', function(data) {
 
 //Documents
 function update() {
-	//Chat drops
+	//Chat fades
 	let removal_id = [];
 	for (let i = 0; i < chatblocks.length; i++) {
 		if (chatblocks[i].update()) {

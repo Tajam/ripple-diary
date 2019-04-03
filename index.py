@@ -1,22 +1,21 @@
 from flask import Flask, render_template, request
 from flask_socketio import SocketIO, emit, rooms, join_room, leave_room
 from random import randint
+from awesomescraper import AwesomeScraper
 import json
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'hello'
+app.config['SECRET_KEY'] = 'nothingimportant'
 socketio = SocketIO(app)
 
-users = dict()
-rooms = dict()
+#Room supports
+users, rooms = {},{}
 
-fontawesome = {'fas':list(),'fab':list()}
-types = {'fas':'solid','fab':'brands'}
-for n in types:
-    file = open(types[n]+'.fal','r')
-    fontawesome[n] = file.read().split(' ')
-    print('Readed',len(fontawesome[n]),types[n],'fonts...')
-    file.close()
+fontawesome = None
+if AwesomeScraper.update():
+    fontawesome = AwesomeScraper.get_result()
+else:
+    print('Font support failed.')
 
 def msg_parse(msg):
     temp = msg.split('::')
@@ -60,5 +59,5 @@ def chain_reaction():
     return render_template('index.html')
 
 if __name__ == '__main__':
-    print('Socket server started!')
+    print('Server served for debug...')
     socketio.run(app, host='0.0.0.0', port='20000')
