@@ -6,6 +6,7 @@ var id_count = 0;
 var id_reset = 10000;
 var chattemp = 0;
 var chattemp_max = 64;
+var vue;
 
 //Socket
 //var socket = io.connect('https://' + document.domain);
@@ -41,6 +42,16 @@ socket.on('onlineupdate', function(data) {
 		data = 'Only you';
 	}
 	$('#online').html('Online: '+data);
+});
+
+socket.on('setname', function(data) {
+	if (data === true) {
+		vue.page = 1;
+		vue.loading = false;
+		vue.title = 'Hello, ' + vue.nickname
+		vue.subtitle = 'Enter room ID to join a room';
+		vue.placeholder = 'Room ID';
+	}
 });
 
 //Documents

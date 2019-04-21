@@ -2,8 +2,34 @@
 body
 {
 	position: fixed;
+    width: 100vw;
+    height: 100vh;
 	margin: 0;
-	font-family: 'Signika', sans-serif;
+	font-family: 'Signika', sans-serif !important;
+    background-image: linear-gradient(to right, rgba(0,0,0,0.1) , white 15%, white 85%, rgba(0,0,0,0.1)) !important;
+    background-attachment: fixed !important;
+    }
+
+@keyframes rippleicon-pump {
+    0% {
+        opacity: 0.5;
+    }
+    10% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.5;
+    }
+}
+
+.ripple-icon
+{
+    width: 15vw;
+    height: 15vw;
+    opacity: 0.5;
+    animation-name: rippleicon-pump;
+    animation-iteration-count: infinite;
+    animation-duration: 5s;
 }
 
 .chatroom

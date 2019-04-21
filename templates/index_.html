@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div id="vue">
+	<div class="container-fluid">
+		<div v-if="page !== 2" class="row mt-5 pt-1 text-center">
+			<div class="col-12 mt-5 mb-3">
+				<img class="ripple-icon" src="{{url_for('static', filename='logo.png')}}"> 
+			</div>
+			<div class="col-12">
+				<h2 class="mb-1">{$ title $}</h2>
+			</div>
+			<div class="col-12">
+				<div class="text-black-50">
+					{$ subtitle $}
+				</div>
+			</div>
+		</div>
+		<!--Home Page-->
+		<div v-if="page !== 2" class="row mt-4 justify-content-center">
+			<div class="col-md-4 col-12 px-md-3">
+				<div class="input-group">
+					<input type="text" class="form-control" :placeholder="placeholder" aria-describedby="nickname-button" v-model="input_model" v-on:keyup.enter="submit">
+					<div class="input-group-append">
+						<button class="btn btn-dark" type="button" id="nickname-button" @click="submit" :disabled="loading == true">
+							<div class="ripple" style="left: 50%; top: 50%; z-index: -1;" v-if="page === 1"></div>
+							<span v-if="loading != true"> > </span>
+							<span v-if="loading == true">
+								<div class="spinner-border spinner-border-sm text-light" role="status"></div>
+							</span>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div v-if="page === 1" class="row mt-2 justify-content-center">
+			<div class="col text-center">
+				<button type="button" class="btn btn-link text-black-50" data-toggle="modal" data-target="#createRoomModal">or create one</button>
+				<div class="modal fade" id="createRoomModal" tabindex="-1" role="dialog" aria-labelledby="createRoomModalLabel" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="createRoomModalLabel">Create a room</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								...
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-dark" data-dismiss="modal">Create</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
