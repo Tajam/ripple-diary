@@ -1,0 +1,126 @@
+/*Global Style*/
+body
+{
+	position: fixed;
+    width: 100vw;
+    height: 100vh;
+	margin: 0;
+	font-family: 'Signika', sans-serif !important;
+    background-image: linear-gradient(to right, rgba(0,0,0,0.1) , white 15%, white 85%, rgba(0,0,0,0.1)) !important;
+    background-attachment: fixed !important;
+}
+
+.sm-fontsize
+{
+    font-size: 14px;
+}
+
+.ripple-icon
+{
+    width: 15vw;
+    height: 15vw;
+    opacity: 0.5;
+    animation-name: rippleicon-pump;
+    animation-iteration-count: infinite;
+    animation-duration: 5s;
+}
+
+@keyframes rippleicon-pump {
+    0% {
+        opacity: 0.5;
+    }
+    10% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.5;
+    }
+}
+
+.chat
+{
+    position: fixed;
+    max-width: 400px;
+    word-wrap: break-word;
+    text-align: center;
+    height: auto;
+    transform: translate(-50%,-50%);
+    opacity: 0;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 1);
+    animation-name: chat-fade;
+    animation-duration: 3s;
+}
+
+@keyframes chat-fade {
+    0% {
+        opacity: 0;
+        text-shadow: 0px 0px 32px rgba(0, 0, 0, 1);
+    }
+    25% {
+        opacity: 0.8;
+        text-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
+    }
+    75% {
+        opacity: 0.8;
+        text-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
+    }
+    100% {
+        opacity: 0;
+        text-shadow: 0px 0px 32px rgba(0, 0, 0, 1);
+    }
+}
+
+.ripple
+{
+    position: absolute;
+    background-color: rgba(0,0,0,0);
+    box-shadow: inset 0px 0px 130px 20px rgba(0,0,0,0.35);
+    border-radius: 100%;
+    transform: translate(-50%,-50%);
+    animation-timing-function: ease-out;
+    animation-name: ripple-splash;
+    animation-duration: 1s;
+}
+
+@keyframes ripple-splash {
+    from {
+        opacity: 1;
+        width: 0;
+        height: 0;
+    }
+    to {
+        opacity: 0;
+        width: 50vw;
+        height: 50vw;
+    }
+}
+
+.slash
+{
+    position: absolute;
+    background-color: rgba(0,0,0,0.5);
+    box-shadow: 0px 0px 130px 20px rgba(0,0,0,0.5);
+    border-radius: 100%;
+    transform: translate(-50%,-50%);
+    animation-timing-function: linear;
+    animation-name: slash-burst;
+    animation-duration: 0.25s;
+}
+
+@keyframes slash-burst {
+    0% {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+    50% {
+        opacity: 1;
+        width: 40vw;
+        height: 20px;
+    }
+    100% {
+        opacity: 0;
+        width: 80vw;
+        height: 0;
+    }
+}

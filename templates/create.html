@@ -1,0 +1,25 @@
+<div class="row mt-2 justify-content-center">
+	<div class="col text-center">
+		<button type="button" class="btn btn-link text-black-50" data-toggle="modal" data-target="#createRoomModal">or create one</button>
+		<div class="modal fade" id="createRoomModal" tabindex="-1" role="dialog" aria-labelledby="createRoomModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h6 class="modal-title" id="createRoomModalLabel">Create a room</h6>
+					</div>
+					<div class="modal-body">
+						...Rooms options...
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-dark" @click="create" :disabled="mechanics.loading == true">
+							<span v-if="mechanics.loading != true">Create</span>
+							<span v-if="mechanics.loading == true">
+								<div class="spinner-border spinner-border-sm text-light" role="status"></div>
+							</span>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

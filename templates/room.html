@@ -1,0 +1,26 @@
+<div class="row justify-content-center position-fixed w-100" style="top: 2px">
+	<div class="col text-center">
+		<button type="button" class="btn btn-dark text-light sm-fontsize py-0 px-2" @click="copyRoomID">
+			{$ userdata.roomid $}
+			<span class="badge badge-light text-dark ml-2">
+				{$ userdata.usercount $}
+			</span>
+		</button>
+		<button type="button" class="btn btn-danger text-light sm-fontsize ml-1 py-0 px-2" @click="leave">
+			<i class="fas fa-times-circle"></i>
+		</button>
+	</div>
+</div>
+
+<div class="row justify-content-center position-fixed w-100" style="bottom: 15px;">
+	<div class="col-md-4 col-12">
+		<div class="progress mb-1" style="height: 15px">
+			<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" v-bind:style="{ width: userdata.manapoint.percentage + '%' }">
+				{$ userdata.manapoint.current $} / {$ userdata.manapoint.max $}
+			</div>
+		</div>
+		{% with method="send" %}
+			{% include 'input.html' %}
+		{% endwith %}
+	</div>
+</div>

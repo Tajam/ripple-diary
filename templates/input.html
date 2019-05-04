@@ -1,0 +1,15 @@
+<div class="input-group">
+	<input type="text" class="form-control" :placeholder="displays.placeholder" aria-describedby="nickname-button" v-model="mechanics.input" v-on:keyup.enter="{{ method }}">
+	<div class="input-group-append">
+		<button class="btn btn-dark" type="button" id="nickname-button" @click="{{ method }}" :disabled="mechanics.loading == true">
+			<span v-if="mechanics.loading != true">
+				<i class="fas fa-angle-right"></i>
+			</span>
+			<div 
+				v-if="mechanics.loading == true" 
+				class="spinner-border spinner-border-sm text-light" 
+				role="status">
+			</div>
+		</button>
+	</div>
+</div>
