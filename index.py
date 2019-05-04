@@ -14,7 +14,7 @@ socketio = SocketIO(app)
 users, rooms = {},{}
 
 fontawesome = None
-if __name__ != '__main__':
+if True:
     if AwesomeScraper.update():
         fontawesome = AwesomeScraper.get_result()
     else:
