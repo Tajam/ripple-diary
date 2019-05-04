@@ -95,7 +95,8 @@ def joinroom(room_id):
     rooms[room_id].users.append(request.sid)
     users[request.sid].room = room_id
     join_room(room_id)
-    emit('joinroom', True)
+    emit('joinroom', room_id)
+    emit('onlineupdate',len(rooms[room_id].users),room=room_id)
     print('Join room {}: {}'.format(room_id, request.sid))
 
 @socketio.on('leaveroom')
@@ -107,7 +108,7 @@ def leaveroom():
     if len(rooms[room_id].users) <= 0:
         rooms.pop(room_id, None)
     else:
-        emit('onlineupdate',len(rooms[room_id].users),room=user.room)
+        emit('onlineupdate',len(rooms[room_id].users),room=room_id)
     emit('leaveroom', room_id)
     print('Leave room {}: {}'.format(room_id, request.sid))
     
