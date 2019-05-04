@@ -13,14 +13,12 @@ socketio = SocketIO(app)
 #Room supports
 users, rooms = {},{}
 
-fontawesome = None
 if True:
     if AwesomeScraper.update():
-        fontawesome = AwesomeScraper.get_result()
+        print('Font awesome scraping succeed!')
     else:
-        print('Font support failed.')
-else:
-    fontawesome = AwesomeScraper.get_result()
+        print('Font awesome scraping failed...')
+fontawesome = AwesomeScraper.get_result()
 
 def msg_parse(raw):
     message = raw.split('::')

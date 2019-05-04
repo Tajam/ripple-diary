@@ -8,10 +8,13 @@ class AwesomeScraper:
         fontawesome = {'fas':list(),'fab':list()}
         types = {'fas':'solid','fab':'brands'}
         for n in types:
-            file = open(types[n]+'.fal','r')
-            fontawesome[n] = file.read().split(' ')
-            print('Readed',len(fontawesome[n]),types[n],'fonts...')
-            file.close()
+            try:
+                file = open(types[n]+'.fal','r')
+                fontawesome[n] = file.read().split(' ')
+                print('Readed',len(fontawesome[n]),types[n],'fonts...')
+                file.close()
+            except:
+                print('{} file not found!'.format(types[n]+'.fal'))
         return fontawesome
     
     @staticmethod
@@ -20,7 +23,7 @@ class AwesomeScraper:
         if platform.system() == 'Windows':
             driver_name = 'chromedriver.exe'
         elif platform.system() == 'Linux':
-            driver_name = 'geckodriver'
+            driver_name = 'chromedriver'
         else:
             raise Exception('Platform not supported!')
         try:
