@@ -1,7 +1,7 @@
 $(document).ready(function() {
 	var vue;
 
-	var socket = io.connect('https://' + document.domain);
+	var socketio = io.connect('https://' + document.domain);
 	//var socketio = io.connect('http://' + document.domain + ':20000');
 
 	function effect(position, effect, target = 'body', timeout = 1050) {
