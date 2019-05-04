@@ -137,4 +137,4 @@ def bait_php():
 
 if __name__ == '__main__':
     print('Server served for debug...')
-    socketio.run(app, host='0.0.0.0', port='20001')
+    socketio.run(app, host='0.0.0.0', port='20000')
