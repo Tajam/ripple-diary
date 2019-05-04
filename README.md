@@ -28,4 +28,4 @@ An interesting annonymous chat website build with websockets! Chat with people a
 - [Jquery](https://jquery.com/) as front-end ultility
 
 ## Latest Update News
-Re-work in progress. 
+Basic re-work complete. New version deployed on [Heroku](https://ripple-diary.herokuapp.com/).
