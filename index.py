@@ -127,10 +127,14 @@ def chatsend(msg):
 def index():
     return render_template('base.html')
 
-@app.route('/Debug')
-def debug():
+@app.route('/admin')
+def bait_admin():
+    return render_template('debug.html')
+
+@app.route('/phpMyAdmin.php')
+def bait_php():
     return render_template('debug.html')
 
 if __name__ == '__main__':
     print('Server served for debug...')
-    socketio.run(app, host='0.0.0.0', port='20000')
+    socketio.run(app, host='0.0.0.0', port='20001')

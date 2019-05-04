@@ -3,14 +3,22 @@ An interesting annonymous chat website build with websockets! Chat with people a
 
 ## Features (To be added)
 
-### Chat message fades away
-Chat messages, images and sketches only stays in the screen for few seconds. No messages will be receive when the diary is not focused.
+### Basics
+- [x] Rooms
+- [x] Chat cooldown
+- [ ] Drag and drop send image
+- [ ] Sound effects?
 
-### Drag and drop images
-Send images by drag and drop into the diary.
+### Room options
+- [ ] List users name
+- [ ] Allocate colours to users
+- [ ] Change cooldown timing
+- [ ] Message fades speed
+- [ ] Transfer host to user
 
-### Send sketches
-Draw and send your sketches with limited amount of ink.
+### Other
+
+- [ ] An introduction/about webpage
 
 ## Dependencies
 - [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) for scrapping icon list
