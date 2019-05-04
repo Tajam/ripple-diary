@@ -19,23 +19,38 @@ if __name__ != '__main__':
         fontawesome = AwesomeScraper.get_result()
     else:
         print('Font support failed.')
+else:
+    fontawesome = AwesomeScraper.get_result()
 
-def msg_parse(msg):
-    temp = msg.split('::')
-    indi = []
-    for n in range(len(temp)-1):
+def msg_parse(raw):
+    message = raw.split('::')
+    formatted = []
+    for n in range(len(message)-1):
         if n%2 == 0:
-            indi.append('message')
+            formatted.append({
+                'type': 'text',
+                'data': message[n]
+                })
             continue
         found = False
         for m in fontawesome:
-            if temp[n] in fontawesome[m]:
-                temp[n] = '<i class="'+m+' fa-'+temp[n]+'"></i>'
-                indi.append('emoji')
+            if message[n] in fontawesome[m]:
+                emoji = '<i class="{} fa-{}"></i>'.format(m, message[n])
+                formatted.append({
+                    'type': 'emoji',
+                    'data': emoji
+                    })
                 found = True
                 break
-        if not found: indi.append('message')
-    return [temp,indi]
+        if not found:
+            formatted.append({
+                'type': 'text',
+                'data': message[n]
+                })
+    return formatted + [{
+        'type': 'text',
+        'data': message[len(message)-1]
+        }]
         
 @socketio.on('connected')
 def connected():
@@ -49,8 +64,9 @@ def disconnect():
         rooms[user.room].users.remove(request.sid)
         if len(rooms[user.room].users) <= 0:
             rooms.pop(user.room, None)
+        else:
+            emit('onlineupdate',len(rooms[user.room].users),room=user.room)
     leave_room(user.room)
-    emit('onlineupdate',len(users),room=user.room)
     print('Disconnected: {}'.format(request.sid))
 
 @socketio.on('setname')
@@ -85,17 +101,19 @@ def joinroom(room_id):
 @socketio.on('leaveroom')
 def leaveroom():
     room_id = users[request.sid].room
-    rooms[room_id].users.pop(request.sid, None)
+    rooms[room_id].users.remove(request.sid)
     users[request.sid].room = None
     leave_room(room_id)
     if len(rooms[room_id].users) <= 0:
         rooms.pop(room_id, None)
+    else:
+        emit('onlineupdate',len(rooms[room_id].users),room=user.room)
     emit('leaveroom', room_id)
     print('Leave room {}: {}'.format(room_id, request.sid))
     
 @socketio.on('chatsend')
 def chatsend(msg):
-    #msg = msg_parse(msg)
+    msg = msg_parse(msg)
     data = {
         'message':msg,
         'x':randint(10,90),

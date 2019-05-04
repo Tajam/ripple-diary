@@ -1,4 +1,8 @@
 $(document).ready(function() {
+	var vue;
+
+	//var socket = io.connect('https://' + document.domain);
+	var socketio = io.connect('http://' + document.domain + ':20000');
 
 	function effect(position, effect, target = 'body', timeout = 1050) {
 		let element = $('<div></div>')
@@ -13,13 +17,55 @@ $(document).ready(function() {
 		})();
 	}
 
-	var vue;
+	function messageParser(element, message) {
+		let size = 48;
+		for (let i = 0; i < message.length; i++) {
+			let item = message[i];
+			if (item.type == 'emoji') {
+				element.append(item.data);
+				if (size > 12) {
+					size -= 2;
+				}
+			} else {
+				element.append(document.createTextNode(item.data));
+				if (size > 12) {
+					size -= item.data.length / 2;
+				}
+			}
+		}
+		element.css('font-size', size + 'px');
+		return element;
+	}
 
-	//var socket = io.connect('https://' + document.domain);
-	var socketio = io.connect('http://' + document.domain + ':20000');
+	function copyToClipboard(text) {
+		var dummy = document.createElement("textarea");
+		document.body.appendChild(dummy);
+		dummy.value = text;
+		dummy.select();
+		document.execCommand("copy");
+		document.body.removeChild(dummy);
+	}
+
+	function regenMana() {
+		if (vue.userdata.manapoint.regen) {
+			return;
+		}
+		vue.userdata.manapoint.regen = true;
+		(async () => {
+			while(vue.userdata.manapoint.regen) {
+				vue.userdata.manapoint.current++;
+				if (vue.userdata.manapoint.current > vue.userdata.manapoint.max) {
+					vue.userdata.manapoint.current = vue.userdata.manapoint.max;
+					vue.userdata.manapoint.regen = false;
+				}
+				vue.userdata.manapoint.percentage = (vue.userdata.manapoint.current / vue.userdata.manapoint.max) * 100;
+				await new Promise((resolve, reject) => setTimeout(resolve, 100));
+			}
+		})();
+	}
 
 	socketio.on('connect', function() {
-    	socketio.emit('connected');
+		socketio.emit('connected');
 	});
 
 	socketio.on('disconnect', function() {
@@ -65,6 +111,26 @@ $(document).ready(function() {
 		}
 	});
 
+	socketio.on('leaveroom', function(data) {
+		vue.mechanics.loading = false;
+		if (data == vue.userdata.roomid) {
+			//Update shows
+			vue.mechanics.show.title = true;
+			vue.mechanics.show.input = true;
+			vue.mechanics.show.create = true;
+			vue.mechanics.show.room = false;
+
+			//Update display
+			vue.displays.placeholder = 'Enter message';
+			vue.userdata.roomid = data;
+
+			effect({left: '50%', top: '50%'}, 'ripple');
+		} else {
+			//Prompt user
+			alert("Something went wrong!");
+		}
+	});
+
 	socketio.on('chatreceive', function(data) {
 		data = JSON.parse(data);
 		//Parse message
@@ -76,7 +142,7 @@ $(document).ready(function() {
 			key: data.hash
 		};
 
-		let element = $('<div>' + message.text + '</div>')
+		let element = messageParser($('<div></div>'), message.text)
 			.addClass('chat')
 			.css('left', message.left + 'px')
 			.css('top', message.top + 'px')
@@ -106,6 +172,12 @@ $(document).ready(function() {
 		//Update display
 		vue.displays.placeholder = 'Enter message';
 		vue.userdata.roomid = data;
+		vue.userdata.usercount = 1;
+
+	});
+
+	socketio.on('onlineupdate', function(data) {
+		vue.userdata.usercount = data;
 
 	});
 
@@ -131,7 +203,17 @@ $(document).ready(function() {
 			userdata: {
 				nickname: '',
 				roomid: '',
-				images: []
+				isHost: false,
+				usercount: 0,
+				images: [],
+				manapoint: {
+					max: 100,
+					current: 100,
+					cost: 20,
+					time: 5000,
+					percentage: 100,
+					regen: false
+				}
 			},
 			socket: socketio
 		},
@@ -156,11 +238,25 @@ $(document).ready(function() {
 			send: function() {
 				let s = this.mechanics.input;
 				if (s.length !== 0 || s.trim()) {
+					if (this.userdata.manapoint.current < this.userdata.manapoint.cost) {
+						return;
+					}
+					this.userdata.manapoint.current -= this.userdata.manapoint.cost;
+					this.userdata.manapoint.percentage = (this.userdata.manapoint.current / this.userdata.manapoint.max) * 100;
 					this.mechanics.loading = true;
 					this.socket.emit('chatsend', s);
 					this.mechanics.input = '';
+
+					regenMana();
 				}
-			}
+			},
+			leave: function() {
+				this.mechanics.loading = true;
+				this.socket.emit('leaveroom');
+			},
+			copyRoomID: function() {
+				copyToClipboard(this.userdata.roomid);
+			} 
 		}
 	})
 });

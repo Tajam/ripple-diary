@@ -10,6 +10,11 @@ body
     background-attachment: fixed !important;
 }
 
+.sm-fontsize
+{
+    font-size: 14px;
+}
+
 .ripple-icon
 {
     width: 15vw;
