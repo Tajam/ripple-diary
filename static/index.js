@@ -121,7 +121,7 @@ $(document).ready(function() {
 			vue.mechanics.show.room = false;
 
 			//Update display
-			vue.displays.placeholder = 'Enter message';
+			vue.displays.placeholder = 'Room ID';
 			vue.userdata.roomid = data;
 
 			effect({left: '50%', top: '50%'}, 'ripple');
